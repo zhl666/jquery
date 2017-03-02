@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>日历</title>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/kalendar-0.0.3.js"></script>
+<style type="text/css">
+html,body,input{margin: 0;padding: 0;}
+a{text-decoration: none;}
+.kalendar{width: 1000px;margin: 30px auto;}
+.kalendarInput{width: 150px;height: 22px;padding: 0 0px;margin-bottom: -1px;}
+.date{border: 1px solid #8a719c;padding: 2px 2px 4px;width: 148px;position: absolute;display: none;opacity: 0;}
+.date:after{clear: both;content: "";height: 0;visibility: hidden;display: block;}
+.dateCont a,.dateCont span{display: inline-block;float: left;width: 20px;height: 20px;font: 12px/20px "Microsoft Yahei";text-align: center;text-decoration: none;background: #d6b6ef;color: #fff;border: 1px solid #ba86e0;margin-right: -1px;margin-bottom: -1px;}
+.dateCont span{background: none;border-color: #fff;}
+.dateCont a.shineWeek{background: #f38803;}
+.dateCont a:hover,.dateCont a.cur{background: #fa0;}
+.dateCont a.disable{background: #ccc;cursor: text;}
+.dateCont{float: left;width: 148px;margin-bottom: 5px;}
+.datePage{height: 24px;background: #bfb0cc;border-radius: 0px;font: 12px/24px "Microsoft Yahei";text-align: center;}
+.datePage a{display: inline-block;width: 20px;height: 24px;float: left;color: #222;font-family: "arial";overflow: hidden;}
+.datePage a em{width: 0;height: 0;overflow: hidden;border-width: 6px;border-style: solid;display: inline-block;position: relative;top: 2px;}
+.datePage a.prevMonth em,.datePage a.prevYear em{border-color: #bfb0cc #a382bf #bfb0cc #bfb0cc;left: -4px;}
+.datePage a.nextMonth em,.datePage a.nextYear em{border-color: #bfb0cc #bfb0cc #bfb0cc #a382bf;left: 4px;}
+.datePage a.prevYear em,.datePage a.nextYear em{border-width: 8px;top: 4px;}
+.datePage a.prevYear em{left: -8px;}
+.datePage a.nextYear em{left: 8px;}
+.datePage a.prevMonth:hover em,.datePage a.prevYear:hover em{border-color: #bfb0cc #fff #bfb0cc #bfb0cc;}
+.datePage a.nextMonth:hover em,.datePage a.nextYear:hover em{border-color: #bfb0cc #bfb0cc #bfb0cc #fff;}
+.datePage span{float: left;width: 68px;color: #fff;line-height: 23px;}
+.dateWeek{height: 24px;font: 12px/24px "Microsoft Yahei";color: #222;}
+.dateWeek span{width: 21px;float: left;text-align: center;}
+</style>
+</head>
+<body>
+<div class="kalendar">
+<!-- <input type="text" value="" placeholder="" id="kalendar" class="kalendarInput" onClick="$(this).kalendar({firstDay: 2})" /> -->
+<input type="text" value="" placeholder="" id="kalendar" class="kalendarInput" />
+<!-- <div class="date">
+	<div class="datePage">
+		<a href="javascript:;" class="prevMonth"><em></em></a>
+		<a href="javascript:;" class="prevYear"><em></em></a>
+		<span>2016-07-08</span>
+		<a href="javascript:;" class="nextYear"><em></em></a>
+		<a href="javascript:;" class="nextMonth"><em></em></a>
+	</div>
+	<div class="dateWeek">
+		<span>一</span>
+		<span>二</span>
+		<span>三</span>
+		<span>四</span>
+		<span>五</span>
+		<span>六</span>
+		<span>日</span>
+	</div>
+	<div class="dateCont">
+		<span></span>
+		<a href="javascript:;">1</a>
+		<a href="javascript:;">2</a>
+		<a href="javascript:;">3</a>
+	</div>
+	<input type="button" value="清空" id="clearBtn" />
+	<input type="button" value="今天" id="todayBtn" />
+	<input type="button" value="确定" id="okBtn" />
+</div> -->
+<input type="text" value="" placeholder="" id="kalendar1" class="kalendarInput" />
+<input type="text" value="" placeholder="" id="kalendar2" class="kalendarInput" />
+<!-- <div class="date">
+	<div class="datePage">
+		<a href="javascript:;" class="prevMonth"><em></em></a>
+		<a href="javascript:;" class="prevYear"><em></em></a>
+		<span>2016-07-08</span>
+		<a href="javascript:;" class="nextYear"><em></em></a>
+		<a href="javascript:;" class="nextMonth"><em></em></a>
+	</div>
+	<div class="dateWeek">
+		<span>一</span>
+		<span>二</span>
+		<span>三</span>
+		<span>四</span>
+		<span>五</span>
+		<span>六</span>
+		<span>日</span>
+	</div>
+	<div class="dateCont">
+		<span></span>
+		<a href="javascript:;">1</a>
+		<a href="javascript:;">2</a>
+		<a href="javascript:;">3</a>
+	</div>
+	<input type="button" value="清空" id="clearBtn" />
+	<input type="button" value="今天" id="todayBtn" />
+	<input type="button" value="确定" id="okBtn" />
+</div> -->
+<script type="text/javascript">
+	$("#kalendar").kalendar({
+		firstDay: 7,
+		maxYear: 2020,
+		minYear: 2000,
+		disabledDays: [],
+		disableWeek: [],
+		shineDays: [],
+		shineWeek: [6,7],
+		minDate: "2017-1-1",
+		maxDate: "2017-12-31",
+		dateFormat: "MM/dd/YY",
+		callback: function(){
+			var aaa = [];
+			// console.log($(".dateCont").find("a.cur").);
+			// var $this = $("#"+_this._id);
+			// $this.find(".dateCont").off("click","a.disable").on("click","a.disable",function(){
+			// 	alert($(this).text());
+			// });
+		}
+	});
+	$("#kalendar1").kalendar({
+		firstDay: 7,
+		maxYear: 2020,
+		minYear: 2000,
+		disabledDays: [],
+		disableWeek: [],
+		shineDays: [],
+		shineWeek: [6],
+		minDate: "2016-1-15",
+		maxDate: "2017-12-26",
+		dateFormat: "YYYY年MM月dd日 hh:mm:ss",
+		callback: function(){
+			var aaa = [];
+			var _this = this;
+			// console.log($(".dateCont").find("a.cur").);
+			var $this = $("#"+_this._id);
+			console.log(_this._id)
+			$this.find(".dateCont").off("click","a").on("click","a",function(){
+				// console.log(_this)
+				// alert("我被禁用了");
+				var value = _this.nowDay.Y+"-"+(_this.nowDay.M+1)+"-"+$(this).text();
+				var year = _this.nowDay.Y, month = ("0"+(_this.nowDay.M+1)).slice(-2), day = ("0"+$(this).text()).slice(-2);
+				valueDate = (new Date(value)).dateFormatFn("YYYY-MM-dd");
+				console.log(valueDate);
+			});
+		}
+	});
+	$("#kalendar2").kalendar({
+		minDate: "2017-1-1",
+		maxDate: "2017-12-31",
+		callback: function(){
+			var _this = this;
+			var $this = $("#"+_this._id);
+			console.log(_this._id)
+			$this.find(".dateCont").off("click","a").on("click","a",function(){
+				// alert("我被禁用了");
+				var value = _this.nowDay.Y+"-"+(_this.nowDay.M+1)+"-"+$(this).text();
+				var year = _this.nowDay.Y, month = ("0"+(_this.nowDay.M+1)).slice(-2), day = ("0"+$(this).text()).slice(-2);
+				// valueDate = (new Date(value)).dateFormatFn("YYYY-MM-dd");
+				// console.log(year,month,day);
+				// console.log($(this).parents(".date").attr("id"));
+				window.open("http://post2.news.163.com/wgethtml/http+!!news.163.com!special!0001386F!index_rank.html!/"+ year +"-"+ month +"/"+ day+"/12.html");
+			});
+		}
+	});
+// this.kalendar({firstDay: 7})
+</script>
+</div>
+</body>
+</html>
